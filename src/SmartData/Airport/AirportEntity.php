@@ -1,7 +1,9 @@
 <?php
 namespace SmartData\SmartData\Airport;
 
-class AirportEntity
+use JsonSerializable;
+
+class AirportEntity implements JsonSerializable
 {
     /**
      * @var string
@@ -72,6 +74,29 @@ class AirportEntity
      * @var int
      */
     private $popularityTier;
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'name' => $this->getName(),
+            'city' => $this->getCity(),
+            'countryName' => $this->getCountryName(),
+            'countryCode' => $this->getCountryCode(),
+            'code' => $this->getCode(),
+            'cityCode' => $this->getCityCode(),
+            'latitude' => $this->getLatitude(),
+            'longitude' => $this->getLongitude(),
+            'altitude' => $this->getAltitude(),
+            'timezone' => $this->getTimezone(),
+            'dst' => $this->getDst(),
+            'isCity' => $this->isCity(),
+            'isMajorAirport' => $this->isMajorAirport(),
+            'popularityTier' => $this->getPopularityTier()
+        ];
+    }
 
     /**
      * @return int
