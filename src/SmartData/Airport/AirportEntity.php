@@ -1,5 +1,5 @@
 <?php
-namespace SmartData\SmartData\Data;
+namespace SmartData\SmartData\Airport;
 
 class AirportEntity
 {
