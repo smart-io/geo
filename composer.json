@@ -1,22 +1,21 @@
 {
-    "name": "smartdata/factory",
+    "name": "smartdata/smartdata",
     "require": {
         "php": ">=5.4.0",
         "symfony/console": "2.*",
-        "psr/log": "~1",
-        "sinergi/config": "0.4.*"
+        "psr/log": "~1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4"
     },
     "autoload": {
         "psr-4": {
-            "SmartData\\Factory\\": "src/Factory"
+            "SmartData\\SmartData\\": "src/SmartData"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "SmartData\\Factory\\Tests\\": ["tests/Factory/Tests", "tests/Factory/Tests/_includes"]
+            "SmartData\\SmartData\\Tests\\": ["tests/SmartData/Tests", "tests/SmartData/Tests/_includes"]
         }
     }
 }

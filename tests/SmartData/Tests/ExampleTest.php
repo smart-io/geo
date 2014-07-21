@@ -1,5 +1,5 @@
 <?php
-namespace SmartData\Factory\Tests;
+namespace SmartData\SmartData\Tests;
 
 use PHPUnit_Framework_TestCase;
 
