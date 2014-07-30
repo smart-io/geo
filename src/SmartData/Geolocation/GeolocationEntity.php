@@ -1,5 +1,5 @@
 <?php
-namespace Flighthub\SmartData\Geolocation;
+namespace SmartData\SmartData\Geolocation;
 
 use JsonSerializable;
 
