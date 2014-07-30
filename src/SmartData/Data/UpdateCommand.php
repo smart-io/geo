@@ -1,6 +1,8 @@
 <?php
 namespace SmartData\SmartData\Data;
 
+use SmartData\SmartData\Data\Source\SourceMapper;
+use SmartData\SmartData\Storage;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use SmartData\SmartData\Command;
@@ -19,11 +21,16 @@ class UpdateCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $sources = json_decode(file_get_contents("https://smartdataprovider.com/source.json"));
+        $output->write('Updating all databases: ');
 
-        var_dump($sources);
-        $output->write('We\'re doing something: ');
-        sleep(1);
+        $sources = (new SourceMapper())->loadCollection();
+        $dataDownloader = new DataDownloader();
+        $storage = new Storage();
+
+        foreach ($sources as $source) {
+            $dataDownloader->download($source, $storage);
+        }
+
         $output->write('[ <fg=green>DONE</fg=green> ]', true);
     }
 }
