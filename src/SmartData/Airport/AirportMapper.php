@@ -1,30 +1,35 @@
 <?php
 namespace SmartData\SmartData\Airport;
 
+use SmartData\SmartData\Storage;
+
 class AirportMapper
 {
-    const JSON_FILE = 'airports/airports.json';
+    const JSON_FILE = '/airports/airports.json';
 
     /**
      * @return string
-     * @todo replace this by the config class
-     * @deprecated
      */
     public function getJsonFile()
     {
-        return __DIR__ . "/../../../storage/" . self::JSON_FILE;
+        return (new Storage())->getStorage() . self::JSON_FILE;
+    }
+
+    public function loadCollection()
+    {
+        $data = json_decode(file_get_contents($this->getJsonFile()), true);
+        return $this->mapJsonCollection($data);
     }
 
     /**
+     * @param array $data
      * @return AirportCollection
      */
-    public function mapCollection()
+    public function mapJsonCollection(array $data)
     {
         $collection = new AirportCollection();
-        $content = file_get_contents($this->getJsonFile());
-        $objects = json_decode($content, true);
-        foreach ($objects as $attributes) {
-            $airport = $this->mapEntity($attributes);
+        foreach ($data as $attributes) {
+            $airport = $this->mapJsonEntity($attributes);
             if (null !== $airport) {
                 $collection->add($airport);
             }
@@ -36,7 +41,7 @@ class AirportMapper
      * @param array $attributes
      * @return AirportEntity
      */
-    public function mapEntity(array $attributes)
+    public function mapJsonEntity(array $attributes)
     {
         $airport = new AirportEntity();
         $airport->setName($attributes['name']);

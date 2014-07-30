@@ -19,7 +19,7 @@ class AirportRepository
     public function findAll()
     {
         if (null === $this->elements) {
-            $this->elements = $this->getMapper()->mapCollection();
+            $this->elements = $this->getMapper()->loadCollection();
         }
         return $this->elements;
     }
