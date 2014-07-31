@@ -4,8 +4,9 @@ namespace SmartData\SmartData\Geolocation;
 use JsonSerializable;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\CoordinateInterface;
+use SmartData\SmartData\Coordinate\CoordinateLogic;
 
-class GeolocationEntity implements JsonSerializable, CoordinateInterface
+class GeolocationEntity extends CoordinateLogic implements JsonSerializable, CoordinateInterface
 {
     const SOURCE_IP = 'ip';
     const SOURCE_HTML5 = 'html5';
