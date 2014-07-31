@@ -3,6 +3,7 @@ namespace SmartData\SmartData;
 
 use SmartData\SmartData\Airport\AirportRepository;
 use SmartData\SmartData\Geolocation\GeolocationRepository;
+use SmartData\SmartData\Ip\IpRepository;
 
 class SmartData
 {
@@ -20,6 +21,11 @@ class SmartData
      * @var GeolocationRepository
      */
     private $geolocationRepository;
+
+    /**
+     * @var IpRepository
+     */
+    private $ipRepository;
 
     /**
      * @return AirportRepository
@@ -41,6 +47,17 @@ class SmartData
             $this->geolocationRepository = new GeolocationRepository();
         }
         return $this->geolocationRepository;
+    }
+
+    /**
+     * @return IpRepository
+     */
+    public function getIpRepository()
+    {
+        if (null === $this->ipRepository) {
+            $this->ipRepository = new IpRepository();
+        }
+        return $this->ipRepository;
     }
 
     /**
