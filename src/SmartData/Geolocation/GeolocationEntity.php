@@ -2,12 +2,19 @@
 namespace SmartData\SmartData\Geolocation;
 
 use JsonSerializable;
+use League\Geotools\Coordinate\Coordinate;
+use League\Geotools\Coordinate\CoordinateInterface;
 
-class GeolocationEntity implements JsonSerializable
+class GeolocationEntity implements JsonSerializable, CoordinateInterface
 {
     const SOURCE_IP = 'ip';
     const SOURCE_HTML5 = 'html5';
     const SOURCE_POSTAL_CODE = 'postal_code';
+
+    /**
+     * @var Coordinate
+     */
+    private $coordinate;
 
     /**
      * @var string
@@ -28,6 +35,14 @@ class GeolocationEntity implements JsonSerializable
      * @var string
      */
     private $source;
+
+    public function __construct()
+    {
+        $this->coordinate = new Coordinate([
+            $this->latitude,
+            $this->longitude
+        ]);
+    }
 
     /**
      * @return array
@@ -62,6 +77,8 @@ class GeolocationEntity implements JsonSerializable
         } else {
             $this->latitude = null;
         }
+
+        $this->coordinate->setLatitude($this->latitude);
         return $this;
     }
 
@@ -85,6 +102,7 @@ class GeolocationEntity implements JsonSerializable
         } else {
             $this->longitude = null;
         }
+        $this->coordinate->setLongitude($this->longitude);
         return $this;
     }
 
@@ -124,5 +142,29 @@ class GeolocationEntity implements JsonSerializable
     {
         $this->accuracy = (int)$accuracy;
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function normalizeLatitude($latitude)
+    {
+        return $this->coordinate->normalizeLatitude($latitude);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function normalizeLongitude($longitude)
+    {
+        return $this->coordinate->normalizeLongitude($longitude);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEllipsoid()
+    {
+        return $this->coordinate->getEllipsoid();
     }
 }

@@ -2,9 +2,16 @@
 namespace SmartData\SmartData\Airport;
 
 use JsonSerializable;
+use League\Geotools\Coordinate\Coordinate;
+use League\Geotools\Coordinate\CoordinateInterface;
 
-class AirportEntity implements JsonSerializable
+class AirportEntity implements JsonSerializable, CoordinateInterface
 {
+    /**
+     * @var Coordinate
+     */
+    private $coordinate;
+
     /**
      * @var string
      */
@@ -74,6 +81,14 @@ class AirportEntity implements JsonSerializable
      * @var int
      */
     private $popularityTier;
+
+    public function __construct()
+    {
+        $this->coordinate = new Coordinate([
+            $this->latitude,
+            $this->longitude
+        ]);
+    }
 
     /**
      * @return array
@@ -275,6 +290,7 @@ class AirportEntity implements JsonSerializable
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
+        $this->coordinate->setLatitude($this->latitude);
         return $this;
     }
 
@@ -293,6 +309,7 @@ class AirportEntity implements JsonSerializable
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
+        $this->coordinate->setLongitude($this->longitude);
         return $this;
     }
 
@@ -348,5 +365,29 @@ class AirportEntity implements JsonSerializable
     {
         $this->timezone = $timezone;
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function normalizeLatitude($latitude)
+    {
+        return $this->coordinate->normalizeLatitude($latitude);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function normalizeLongitude($longitude)
+    {
+        return $this->coordinate->normalizeLongitude($longitude);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEllipsoid()
+    {
+        return $this->coordinate->getEllipsoid();
     }
 }
