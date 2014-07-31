@@ -23,13 +23,7 @@ class UpdateCommand extends Command
     {
         $output->write('Updating all databases: ');
 
-        $sources = (new SourceMapper())->loadCollection();
-        $dataDownloader = new DataDownloader();
-        $storage = new Storage();
-
-        foreach ($sources as $source) {
-            $dataDownloader->download($source, $storage);
-        }
+        (new DataUpdater())->update();
 
         $output->write('[ <fg=green>DONE</fg=green> ]', true);
     }
