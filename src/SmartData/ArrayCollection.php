@@ -12,7 +12,7 @@ class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, Json
     /**
      * @var array
      */
-    private $elements;
+    protected $elements;
 
     /**
      * @param array $elements
