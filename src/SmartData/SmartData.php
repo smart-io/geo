@@ -2,40 +2,46 @@
 namespace SmartData\SmartData;
 
 use SmartData\SmartData\Airport\AirportRepository;
+use SmartData\SmartData\Country\CountryRepository;
 use SmartData\SmartData\Geolocation\GeolocationRepository;
 use SmartData\SmartData\Ip\IpRepository;
 
 class SmartData
 {
     /**
-     * @var string
+     * @var Storage
      */
-    private $storage;
+    private static $storage;
 
     /**
      * @var AirportRepository
      */
-    private $airportRepository;
+    private static $airportRepository;
 
     /**
      * @var GeolocationRepository
      */
-    private $geolocationRepository;
+    private static $geolocationRepository;
 
     /**
      * @var IpRepository
      */
-    private $ipRepository;
+    private static $ipRepository;
+
+    /**
+     * @var CountryRepository
+     */
+    private static $countryRepository;
 
     /**
      * @return AirportRepository
      */
-    public function getAirportRepository()
+    public static function getAirportRepository()
     {
-        if (null === $this->airportRepository) {
-            $this->airportRepository = new AirportRepository();
+        if (null === self::$airportRepository) {
+            self::$airportRepository = new AirportRepository();
         }
-        return $this->airportRepository;
+        return self::$airportRepository;
     }
 
     /**
@@ -43,38 +49,50 @@ class SmartData
      */
     public function getGeolocationRepository()
     {
-        if (null === $this->geolocationRepository) {
-            $this->geolocationRepository = new GeolocationRepository();
+        if (null === self::$geolocationRepository) {
+            self::$geolocationRepository = new GeolocationRepository();
         }
-        return $this->geolocationRepository;
+        return self::$geolocationRepository;
     }
 
     /**
      * @return IpRepository
      */
-    public function getIpRepository()
+    public static function getIpRepository()
     {
-        if (null === $this->ipRepository) {
-            $this->ipRepository = new IpRepository();
+        if (null === self::$ipRepository) {
+            self::$ipRepository = new IpRepository();
         }
-        return $this->ipRepository;
+        return self::$ipRepository;
     }
 
     /**
-     * @return string
+     * @return CountryRepository
      */
-    public function getStorage()
+    public static function getCountryRepository()
     {
-        return $this->storage;
+        if (null === self::$countryRepository) {
+            self::$countryRepository = new CountryRepository(self::getStorage());
+        }
+        return self::$countryRepository;
     }
 
     /**
-     * @param string $storage
-     * @return $this
+     * @param Storage $storage
      */
-    public function setStorage($storage)
+    public static function setStorage($storage)
     {
-        $this->storage = $storage;
-        return $this;
+        self::$storage = $storage;
+    }
+
+    /**
+     * @return Storage
+     */
+    public static function getStorage()
+    {
+        if (null === self::$storage) {
+            self::$storage = new Storage();
+        }
+        return self::$storage;
     }
 }
