@@ -13,18 +13,43 @@ class DataDownloader
      */
     public function download(Source $source, Storage $storage)
     {
-        $tmpFile = $this->downloadFile($source);
+        $tmpFile = $this->downloadFile($source->getProvider());
         $tmpFile = $this->uncompress($source, $tmpFile);
-        return $this->moveFile($tmpFile, $source, $storage);
+
+        if ($source->getComponents()) {
+            $this->downloadComponents($tmpFile, $source->getComponents(), $storage);
+        }
+
+        return $this->moveFile($tmpFile, $source->getPath() . DIRECTORY_SEPARATOR . $source->getFilename(), $storage);
     }
 
     /**
-     * @param Source $source
+     * @param string $dataFile
+     * @param array $components
+     * @param Storage $storage
+     */
+    private function downloadComponents($dataFile, array $components, Storage $storage)
+    {
+        $data = json_decode(file_get_contents($dataFile), true);
+        foreach ($components as $component) {
+            foreach ($data as $entry) {
+                $key = $entry[$component['key']];
+                $provider = sprintf($component['provider'], $key);
+
+                $tmpFile = $this->downloadFile($provider);
+                $filename = sprintf($component['filename'], $key);
+                $this->moveFile($tmpFile, $component['path'] . DIRECTORY_SEPARATOR . $filename, $storage);
+            }
+        }
+    }
+
+    /**
+     * @param string $file
      * @return string
      */
-    private function downloadFile(Source $source)
+    private function downloadFile($file)
     {
-        $filename = basename($source->getProvider());
+        $filename = basename($file);
         $destination = tempnam(sys_get_temp_dir(), 'smartdata');
 
         if (!is_dir($destination)) {
@@ -35,7 +60,7 @@ class DataDownloader
         }
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $source->getProvider());
+        curl_setopt($ch, CURLOPT_URL, $file);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $data = curl_exec($ch);
@@ -69,11 +94,11 @@ class DataDownloader
 
     /**
      * @param string $tmpFile
-     * @param Source $source
+     * @param string $destination
      * @param Storage $storage
      * @return string
      */
-    private function moveFile($tmpFile, Source $source, Storage $storage)
+    private function moveFile($tmpFile, $destination, Storage $storage)
     {
         if (!is_dir($storage->getStorage())) {
             if (file_exists($storage->getStorage())) {
@@ -84,7 +109,7 @@ class DataDownloader
 
         $newFilename = implode(
             DIRECTORY_SEPARATOR,
-            [$storage->getStorage(), $source->getPath(), $source->getFilename()]
+            [$storage->getStorage(), $destination]
         );
 
         if (!is_dir(dirname($newFilename))) {
