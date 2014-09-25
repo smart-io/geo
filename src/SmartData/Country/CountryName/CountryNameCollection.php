@@ -13,7 +13,7 @@ class CountryNameCollection extends ArrayCollection
 
     /**
      * @param string|LanguageEntity $key
-     * @return null|mixed
+     * @return null|CountryNameEntity
      */
     public function get($key)
     {
