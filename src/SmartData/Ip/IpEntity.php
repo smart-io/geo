@@ -6,7 +6,7 @@ class IpEntity
     /**
      * @var string
      */
-    private $ip;
+    protected $ip;
 
     /**
      * @return string

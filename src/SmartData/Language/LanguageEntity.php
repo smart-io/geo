@@ -8,7 +8,7 @@ class LanguageEntity implements JsonSerializable
     /**
      * @var string
      */
-    private $code;
+    protected $code;
 
     /**
      * @return array

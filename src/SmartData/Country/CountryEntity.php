@@ -12,52 +12,52 @@ class CountryEntity extends CoordinateLogic implements JsonSerializable, Coordin
     /**
      * @var Coordinate
      */
-    private $coordinate;
+    protected $coordinate;
 
     /**
      * @var CountryNameCollection
      */
-    private $names;
+    protected $names;
 
     /**
      * @var string
      */
-    private $shortCode;
+    protected $shortCode;
 
     /**
      * @var string
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
      */
-    private $latitude;
+    protected $latitude;
 
     /**
      * @var string
      */
-    private $longitude;
+    protected $longitude;
 
     /**
      * @var string
      */
-    private $boundariesNortheastLatitude;
+    protected $boundariesNortheastLatitude;
 
     /**
      * @var string
      */
-    private $boundariesNortheastLongitude;
+    protected $boundariesNortheastLongitude;
 
     /**
      * @var string
      */
-    private $boundariesSouthwestLatitude;
+    protected $boundariesSouthwestLatitude;
 
     /**
      * @var string
      */
-    private $boundariesSouthwestLongitude;
+    protected $boundariesSouthwestLongitude;
 
     public function __construct()
     {

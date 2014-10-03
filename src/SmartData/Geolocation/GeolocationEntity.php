@@ -17,37 +17,37 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
     /**
      * @var Coordinate
      */
-    private $coordinate;
+    protected $coordinate;
 
     /**
      * @var string
      */
-    private $latitude;
+    protected $latitude;
 
     /**
      * @var string
      */
-    private $longitude;
+    protected $longitude;
 
     /**
      * @var string
      */
-    private $accuracy;
+    protected $accuracy;
 
     /**
      * @var CountryEntity
      */
-    private $country;
+    protected $country;
 
     /**
      * @var string
      */
-    private $unmappedCountry;
+    protected $unmappedCountry;
 
     /**
      * @var string
      */
-    private $source;
+    protected $source;
 
     public function __construct()
     {
