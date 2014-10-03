@@ -193,6 +193,24 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
     }
 
     /**
+     * @return string
+     */
+    public function getUnmappedCountry()
+    {
+        return $this->unmappedCountry;
+    }
+
+    /**
+     * @param string $unmappedCountry
+     * @return $this
+     */
+    public function setUnmappedCountry($unmappedCountry)
+    {
+        $this->unmappedCountry = $unmappedCountry;
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function normalizeLatitude($latitude)
