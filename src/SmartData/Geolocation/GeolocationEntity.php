@@ -51,6 +51,11 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
 
     public function __construct()
     {
+        $this->createCoordinate();
+    }
+
+    public function createCoordinate()
+    {
         $this->coordinate = new Coordinate([
             $this->latitude,
             $this->longitude
@@ -93,7 +98,7 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
         }
 
         if (null === $this->coordinate) {
-            $this->__construct();
+            $this->createCoordinate();
         }
 
         $this->coordinate->setLatitude($this->latitude);
@@ -122,7 +127,7 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
         }
 
         if (null === $this->coordinate) {
-            $this->__construct();
+            $this->createCoordinate();
         }
 
         $this->coordinate->setLongitude($this->longitude);
