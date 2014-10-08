@@ -5,6 +5,8 @@ use JsonSerializable;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\CoordinateInterface;
 use SmartData\SmartData\Coordinate\CoordinateLogic;
+use SmartData\SmartData\Country\CountryEntity;
+use SmartData\SmartData\SmartData;
 
 class GeolocationEntity extends CoordinateLogic implements JsonSerializable, CoordinateInterface
 {
@@ -15,29 +17,44 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
     /**
      * @var Coordinate
      */
-    private $coordinate;
+    protected $coordinate;
 
     /**
      * @var string
      */
-    private $latitude;
+    protected $latitude;
 
     /**
      * @var string
      */
-    private $longitude;
+    protected $longitude;
 
     /**
      * @var string
      */
-    private $accuracy;
+    protected $accuracy;
+
+    /**
+     * @var CountryEntity
+     */
+    protected $country;
 
     /**
      * @var string
      */
-    private $source;
+    protected $unmappedCountry;
+
+    /**
+     * @var string
+     */
+    protected $source;
 
     public function __construct()
+    {
+        $this->createCoordinate();
+    }
+
+    public function createCoordinate()
     {
         $this->coordinate = new Coordinate([
             $this->latitude,
@@ -54,7 +71,8 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
             'latitude' => $this->getLatitude(),
             'longitude' => $this->getLongitude(),
             'source' => $this->getSource(),
-            'accuracy' => $this->getAccuracy()
+            'accuracy' => $this->getAccuracy(),
+            'country' => $this->getCountry(),
         ];
     }
 
@@ -77,6 +95,10 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
             $this->latitude = bcadd($latitude, 0, 14);
         } else {
             $this->latitude = null;
+        }
+
+        if (null === $this->coordinate) {
+            $this->createCoordinate();
         }
 
         $this->coordinate->setLatitude($this->latitude);
@@ -103,6 +125,11 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
         } else {
             $this->longitude = null;
         }
+
+        if (null === $this->coordinate) {
+            $this->createCoordinate();
+        }
+
         $this->coordinate->setLongitude($this->longitude);
         return $this;
     }
@@ -142,6 +169,49 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
     public function setAccuracy($accuracy)
     {
         $this->accuracy = (int)$accuracy;
+        return $this;
+    }
+
+    /**
+     * @return CountryEntity
+     */
+    public function getCountry()
+    {
+        if (null !== $this->unmappedCountry && null === $this->country) {
+            $this->country = SmartData::getCountryRepository()->findByShortCode($this->unmappedCountry);
+        }
+        return $this->country;
+    }
+
+    /**
+     * @param CountryEntity|string $country
+     * @return $this
+     */
+    public function setCountry($country)
+    {
+        if (is_string($country)) {
+            $this->unmappedCountry = $country;
+        } else {
+            $this->country = $country;
+        }
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnmappedCountry()
+    {
+        return $this->unmappedCountry;
+    }
+
+    /**
+     * @param string $unmappedCountry
+     * @return $this
+     */
+    public function setUnmappedCountry($unmappedCountry)
+    {
+        $this->unmappedCountry = $unmappedCountry;
         return $this;
     }
 

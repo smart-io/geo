@@ -1,11 +1,14 @@
 {
     "name": "smartdata/smartdata",
+    "repositories": [
+        {"type": "vcs", "url": "git@github.com:gabrielbull/geotools.git"}
+    ],
     "require": {
         "php": ">=5.4.0",
         "symfony/console": "2.*",
         "psr/log": "~1",
         "maxmind-db/reader": "0.3.*",
-        "league/geotools": "0.4.*"
+        "league/geotools": "dev-feature/polygon"
     },
     "require-dev": {
         "phpunit/phpunit": "~4"

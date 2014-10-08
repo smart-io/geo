@@ -10,77 +10,77 @@ class AirportEntity implements JsonSerializable, CoordinateInterface
     /**
      * @var Coordinate
      */
-    private $coordinate;
+    protected $coordinate;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $city;
+    protected $city;
 
     /**
      * @var string
      */
-    private $countryName;
+    protected $countryName;
 
     /**
      * @var string
      */
-    private $countryCode;
+    protected $countryCode;
 
     /**
      * @var string
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
      */
-    private $cityCode;
+    protected $cityCode;
 
     /**
      * @var string
      */
-    private $latitude;
+    protected $latitude;
 
     /**
      * @var string
      */
-    private $longitude;
+    protected $longitude;
 
     /**
      * @var int
      */
-    private $altitude;
+    protected $altitude;
 
     /**
      * @var string
      */
-    private $timezone;
+    protected $timezone;
 
     /**
      * @var string
      */
-    private $dst;
+    protected $dst;
 
     /**
      * @var bool
      */
-    private $isCity;
+    protected $isCity;
 
     /**
      * @var bool
      */
-    private $isMajorAirport;
+    protected $isMajorAirport;
 
     /**
      * @var int
      */
-    private $popularityTier;
+    protected $popularityTier;
 
     public function __construct()
     {

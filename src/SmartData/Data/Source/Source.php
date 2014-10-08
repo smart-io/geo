@@ -39,6 +39,11 @@ class Source implements SourceInterface
     private $path;
 
     /**
+     * @var array
+     */
+    private $components;
+
+    /**
      * @param array $attibutes
      */
     public function __construct(array $attibutes = null)
@@ -80,6 +85,9 @@ class Source implements SourceInterface
                     break;
                 case 'path':
                     $this->setPath($value);
+                    break;
+                case 'components':
+                    $this->setComponents($value);
                     break;
             }
         }
@@ -208,6 +216,24 @@ class Source implements SourceInterface
     public function setVersion($version)
     {
         $this->version = $version;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getComponents()
+    {
+        return $this->components;
+    }
+
+    /**
+     * @param array $components
+     * @return $this
+     */
+    public function setComponents($components)
+    {
+        $this->components = $components;
         return $this;
     }
 }
