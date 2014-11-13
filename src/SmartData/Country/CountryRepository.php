@@ -8,9 +8,19 @@ class CountryRepository
     const COUNTRIES_FILES = 'countries/countries/%s.json';
 
     /**
+     * @var CountryCollection
+     */
+    private $container;
+
+    /**
      * @var Storage
      */
     private $storage;
+
+    /**
+     * @var CountryMapper
+     */
+    private $mapper;
 
     /**
      * @param Storage $storage
@@ -18,6 +28,28 @@ class CountryRepository
     public function __construct(Storage $storage)
     {
         $this->storage = $storage;
+    }
+
+    /**
+     * @return CountryMapper
+     */
+    private function getMapper()
+    {
+        if (null === $this->mapper) {
+            $this->mapper = new CountryMapper();
+        }
+        return $this->mapper;
+    }
+
+    /**
+     * @return CountryCollection
+     */
+    public function findAll()
+    {
+        if (null === $this->container) {
+            $this->container = $this->getMapper()->loadCollection();
+        }
+        return $this->container;
     }
 
     /**
