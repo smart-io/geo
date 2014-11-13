@@ -39,6 +39,71 @@ class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, Json
     }
 
     /**
+     * @param $key
+     * @return $this
+     */
+    public function order($key)
+    {
+        if (strpos($key, '.') !== false) {
+            $this->orderByChildCollection(explode('.', $key));
+            return $this;
+        }
+        trigger_error('feature not implemented'); // todo implement feature
+        return null;
+    }
+
+    /**
+     * @param $keys
+     * @return $this
+     */
+    private function orderByChildCollection($keys)
+    {
+        $ordered = [];
+        foreach ($this->getIterator() as $item) {
+            $value = $this->getChildValueRecursive($item, $keys);
+            $ordered[$value] = $item;
+        }
+
+        ksort($ordered);
+        $ordered = array_values($ordered);
+        $this->elements = $ordered;
+        return $this;
+    }
+
+    /**
+     * @param $item
+     * @param $keys
+     * @return mixed|null
+     */
+    private function getChildValueRecursive($item, $keys)
+    {
+        $currentKey = current($keys);
+        $remainingKeys = array_splice($keys, 1);
+        if (method_exists($item, "get{$currentKey}")) {
+            $method = "get{$currentKey}";
+        } elseif (method_exists($item, $currentKey)) {
+            $method = $currentKey;
+        } elseif (method_exists($item, 'get')) {
+            $value = $item->get($currentKey);
+        }
+
+        if (!isset($value) && isset($method)) {
+            $value = call_user_func([$item, 'get' . current($keys)]);
+        } elseif (!isset($value) && property_exists($item, $currentKey)) {
+            $value = $item->{$currentKey};
+        }
+
+        if (isset($value)) {
+            if (count($remainingKeys)) {
+                return $this->getChildValueRecursive($value, $remainingKeys);
+            } else {
+                return $value;
+            }
+        }
+        return null;
+    }
+
+    /**
      * @param string $offset
      * @return bool
      */
