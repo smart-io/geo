@@ -1,5 +1,10 @@
 # SmartData
 
+[![Build Status](https://img.shields.io/travis/mysmartdata/php-smartdata/master.svg?style=flat)](https://travis-ci.org/mysmartdata/php-smartdata)
+[![Latest Stable Version](http://img.shields.io/packagist/v/smartdata/smartdata.svg?style=flat)](https://packagist.org/packages/smartdata/smartdata)
+[![Total Downloads](https://img.shields.io/packagist/dt/smartdata/smartdata.svg?style=flat)](https://packagist.org/packages/smartdata/smartdata)
+[![License](https://img.shields.io/packagist/l/smartdata/smartdata.svg?style=flat)](https://packagist.org/packages/smartdata/smartdata)
+
 SmartData is data from Open Data providers compiled into easy to use PHP objects.
 
 1. [Features](#features)
@@ -130,7 +135,7 @@ Get the network IP from icanhazip.com.
 $smartData = new SmartData;
 $ip = $smartData->getIpRepository()->findRealIp();
 ```
- 
+
 ## Geolocation
 
 Get a Geolocation by IP (Uses MaxMind).
@@ -141,18 +146,18 @@ __Properties__
  * Longitude
  * Country
 
- __Examples__
+__Examples__
 
 Get a Geolocation from the IP.
- 
- ```php
- $smartData = new SmartData;
- $ip = $smartData->getIpRepository()->findIp();
- $geolocation = $smartData->getGeolocationRepository()->findByIp($ip);
- ```
- 
- Get country from Geolocation.
- 
- ```php
- echo "You are in this country: " . $geolocation->getCountry()->getNames()->get('en');
- ```
+
+```php
+$smartData = new SmartData;
+$ip = $smartData->getIpRepository()->findIp();
+$geolocation = $smartData->getGeolocationRepository()->findByIp($ip);
+```
+
+Get country from Geolocation.
+
+```php
+echo "You are in this country: " . $geolocation->getCountry()->getNames()->get('en');
+```
