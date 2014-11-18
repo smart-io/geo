@@ -37,8 +37,9 @@ class DataDownloader
                 $provider = sprintf($component['provider'], $key);
 
                 $tmpFile = $this->downloadFile($provider);
+                $path = sprintf($component['path'], $key);
                 $filename = sprintf($component['filename'], $key);
-                $this->moveFile($tmpFile, $component['path'] . DIRECTORY_SEPARATOR . $filename, $storage);
+                $this->moveFile($tmpFile, $path . DIRECTORY_SEPARATOR . $filename, $storage);
             }
         }
     }
