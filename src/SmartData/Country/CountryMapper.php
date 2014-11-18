@@ -8,41 +8,15 @@ use SmartData\SmartData\Language\LanguageCollection;
 
 class CountryMapper
 {
-    const JSON_FILE = '/countries/countries.json';
-
-    /**
-     * @var LanguageCollection
-     */
-    private $languageCollection;
-
-    public function __construct()
-    {
-        $this->languageCollection = (new LanguageMapper())->mapCollection();
-    }
-
-    /**
-     * @return string
-     */
-    public function getJsonFile()
-    {
-        return (new Storage())->getStorage() . self::JSON_FILE;
-    }
-
-    public function loadCollection()
-    {
-        $data = json_decode(file_get_contents($this->getJsonFile()), true);
-        return $this->mapJsonCollection($data);
-    }
-
     /**
      * @param array $data
      * @return CountryCollection
      */
-    public function mapJsonCollection(array $data)
+    public function mapArrayToCollection(array $data)
     {
         $collection = new CountryCollection();
         foreach ($data as $attributes) {
-            $country = $this->mapJsonEntity($attributes);
+            $country = $this->mapArrayToEntity($attributes);
             if (null !== $country) {
                 $collection->add($country);
             }
@@ -54,21 +28,27 @@ class CountryMapper
      * @param array $attributes
      * @return CountryEntity
      */
-    public function mapJsonEntity(array $attributes)
+    public function mapArrayToEntity(array $attributes)
     {
         $country = new CountryEntity();
         $country->setCode($attributes['code']);
         $country->setShortCode($attributes['shortCode']);
         $country->setLatitude($attributes['latitude']);
         $country->setLongitude($attributes['longitude']);
-        $country->setBoundariesNortheastLatitude($attributes['boundariesNortheastLatitude']);
-        $country->setBoundariesNortheastLongitude($attributes['boundariesNortheastLongitude']);
-        $country->setBoundariesSouthwestLatitude($attributes['boundariesSouthwestLatitude']);
-        $country->setBoundariesSouthwestLongitude($attributes['boundariesSouthwestLongitude']);
+        $country->setCurrency($attributes['currency']);
+        $country->setContinent($attributes['continent']);
+        $country->setPopulation($attributes['population']);
+        $country->setArea($attributes['area']);
+        $country->setCapital($attributes['capital']);
+        $country->setTimezone($attributes['timezone']);
+        $country->setNorth($attributes['north']);
+        $country->setEast($attributes['east']);
+        $country->setSouth($attributes['south']);
+        $country->setWest($attributes['west']);
 
         foreach ($attributes['names'] as $language => $name) {
             $countryName = new CountryNameEntity();
-            $countryName->setLanguage($this->languageCollection->get($language));
+            $countryName->setLanguage($language);
             $countryName->setName($name);
             $country->getNames()->add($countryName);
         }

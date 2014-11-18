@@ -9,7 +9,7 @@ class CountryCollectionTest extends PHPUnit_Framework_TestCase
 {
     public function getCollection()
     {
-        return (new CountryRepository(new Storage()))->findAll();
+        return (new CountryRepository)->findAll();
     }
 
     public function testOrderByCountryName()

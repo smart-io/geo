@@ -5,12 +5,15 @@ use SmartData\SmartData\Storage;
 
 class CountryRepository
 {
-    const COUNTRIES_FILES = 'countries/countries/%s.json';
-
     /**
      * @var CountryCollection
      */
-    private $container;
+    private $collection;
+
+    /**
+     * @var CountryEntity[]
+     */
+    private $items = [];
 
     /**
      * @var Storage
@@ -23,11 +26,51 @@ class CountryRepository
     private $mapper;
 
     /**
+     * @var CountryLoader
+     */
+    private $loader;
+
+    /**
      * @param Storage $storage
      */
-    public function __construct(Storage $storage)
+    public function __construct(Storage $storage = null)
     {
         $this->storage = $storage;
+    }
+
+    /**
+     * @return CountryCollection
+     */
+    public function findAll()
+    {
+        if (null === $this->collection) {
+            $this->collection = $this->getMapper()->mapArrayToCollection($this->getLoader()->loadAllCountries());
+        }
+        return $this->collection;
+    }
+
+    /**
+     * @param string $shortCode
+     * @return null|CountryEntity
+     */
+    public function findByShortCode($shortCode)
+    {
+        if (isset($items[$shortCode])) {
+            return
+                $items[$shortCode] = $this->getMapper()->mapArrayToEntity($this->getLoader()->loadCountry($shortCode));
+        }
+        return $items[$shortCode];
+    }
+
+    /**
+     * @return CountryLoader
+     */
+    private function getLoader()
+    {
+        if (null === $this->loader) {
+            $this->loader = new CountryLoader($this->storage);
+        }
+        return $this->loader;
     }
 
     /**
@@ -39,30 +82,5 @@ class CountryRepository
             $this->mapper = new CountryMapper();
         }
         return $this->mapper;
-    }
-
-    /**
-     * @return CountryCollection
-     */
-    public function findAll()
-    {
-        if (null === $this->container) {
-            $this->container = $this->getMapper()->loadCollection();
-        }
-        return $this->container;
-    }
-
-    /**
-     * @param string $shortCode
-     * @return null|CountryEntity
-     */
-    public function findByShortCode($shortCode)
-    {
-        $file = $this->storage->getStorage() . DIRECTORY_SEPARATOR . sprintf(self::COUNTRIES_FILES, $shortCode);
-        if (is_file($file)) {
-            $data = json_decode(file_get_contents($file), true);
-            return (new CountryMapper)->mapJsonEntity($data);
-        }
-        return null;
     }
 }

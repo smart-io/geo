@@ -22,7 +22,9 @@ class CountryNameCollection extends ArrayCollection
         } else {
             if (is_string($key)) {
                 foreach ($this->elements as $element) {
-                    if ($key === $element->getLanguage()->getCode()) {
+                    if (is_string($element->getLanguage()) && $key === $element->getLanguage()) {
+                        return $element;
+                    } elseif ($key === $element->getLanguage()->getCode()) {
                         return $element;
                     }
                 }

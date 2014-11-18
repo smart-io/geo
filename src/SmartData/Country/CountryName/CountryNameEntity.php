@@ -12,7 +12,7 @@ class CountryNameEntity implements JsonSerializable
     private $name;
 
     /**
-     * @var LanguageEntity
+     * @var string|LanguageEntity
      */
     private $language;
 
@@ -36,10 +36,10 @@ class CountryNameEntity implements JsonSerializable
     }
 
     /**
-     * @param LanguageEntity $language
+     * @param LanguageEntity|string $language
      * @return $this
      */
-    public function setLanguage(LanguageEntity $language)
+    public function setLanguage($language)
     {
         $this->language = $language;
         return $this;
