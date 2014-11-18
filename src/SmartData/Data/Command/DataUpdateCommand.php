@@ -1,13 +1,12 @@
 <?php
-namespace SmartData\SmartData\Data;
+namespace SmartData\SmartData\Data\Command;
 
-use SmartData\SmartData\Data\Source\SourceMapper;
-use SmartData\SmartData\Storage;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use SmartData\SmartData\Command;
+use SmartData\SmartData\Data\DataUpdater;
 
-class UpdateCommand extends Command
+class DataUpdateCommand extends Command
 {
     protected function configure()
     {

@@ -14,8 +14,7 @@ if (file_exists($vendor . "/autoload.php")) {
 }
 
 use Symfony\Component\Console\Application;
-use SmartData\SmartData\Data\UpdateCommand;
 
 $application = new Application();
-$application->add(new UpdateCommand());
+$application->add(new \SmartData\SmartData\Data\Command\DataUpdateCommand());
 $application->run();

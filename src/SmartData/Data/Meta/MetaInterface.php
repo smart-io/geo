@@ -1,7 +1,7 @@
 <?php
-namespace SmartData\SmartData\Data\Source;
+namespace SmartData\SmartData\Data\Meta;
 
-interface SourceInterface
+interface MetaInterface
 {
     public function getType();
     public function getUrl();

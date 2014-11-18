@@ -5,15 +5,16 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/smartdata/smartdata.svg?style=flat)](https://packagist.org/packages/smartdata/smartdata)
 [![License](https://img.shields.io/packagist/l/smartdata/smartdata.svg?style=flat)](https://packagist.org/packages/smartdata/smartdata)
 
-SmartData is data from Open Data providers compiled into easy to use PHP objects.
+SmartData is databases from Open Data providers compiled into easy to use PHP objects.
 
 1. [Features](#features)
-2. [Requirements](#requirements)
-3. [Installation](#installation)
-4. [Country](#country)
-5. [Region](#region)
-6. [IP](#ip)
-7. [Geolocation](#geolocation)
+2. [Sources](#sources)
+3. [Requirements](#requirements)
+4. [Installation](#installation)
+5. [Country](#country)
+6. [Region](#region)
+7. [IP](#ip)
+8. [Geolocation](#geolocation)
 
 ## Features
 
@@ -21,6 +22,12 @@ SmartData is data from Open Data providers compiled into easy to use PHP objects
  * Country Database
  * Region Database (Currently only for Canada and the United States). 
  * IP Geolocation (With MaxMind)
+
+## Sources
+
+ * [GeoNames](http://www.geonames.org/)
+ * [Wikipedia](http://en.wikipedia.org/)
+ * [OpenStreetMap](http://www.openstreetmap.org/)
 
 ## Requirements
 

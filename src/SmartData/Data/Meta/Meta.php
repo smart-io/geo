@@ -1,7 +1,7 @@
 <?php
-namespace SmartData\SmartData\Data\Source;
+namespace SmartData\SmartData\Data\Meta;
 
-class Source implements SourceInterface
+class Meta implements MetaInterface
 {
     /**
      * @var string

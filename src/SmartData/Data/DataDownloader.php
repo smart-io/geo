@@ -1,26 +1,26 @@
 <?php
 namespace SmartData\SmartData\Data;
 
-use SmartData\SmartData\Data\Source\Source;
+use SmartData\SmartData\Data\Meta\Meta;
 use SmartData\SmartData\Storage;
 
 class DataDownloader
 {
     /**
-     * @param Source $source
+     * @param Meta $meta
      * @param Storage $storage
      * @return string
      */
-    public function download(Source $source, Storage $storage)
+    public function download(Meta $meta, Storage $storage)
     {
-        $tmpFile = $this->downloadFile($source->getProvider());
-        $tmpFile = $this->uncompress($source, $tmpFile);
+        $tmpFile = $this->downloadFile($meta->getProvider());
+        $tmpFile = $this->uncompress($meta, $tmpFile);
 
-        if ($source->getComponents()) {
-            $this->downloadComponents($tmpFile, $source->getComponents(), $storage);
+        if ($meta->getComponents()) {
+            $this->downloadComponents($tmpFile, $meta->getComponents(), $storage);
         }
 
-        return $this->moveFile($tmpFile, $source->getPath() . DIRECTORY_SEPARATOR . $source->getFilename(), $storage);
+        return $this->moveFile($tmpFile, $meta->getPath() . DIRECTORY_SEPARATOR . $meta->getFilename(), $storage);
     }
 
     /**
@@ -73,13 +73,13 @@ class DataDownloader
     }
 
     /**
-     * @param Source $source
+     * @param Meta $meta
      * @param string $tmpFile
      * @return string
      */
-    private function uncompress(Source $source, $tmpFile)
+    private function uncompress(Meta $meta, $tmpFile)
     {
-        if ($source->getCompression()) {
+        if ($meta->getCompression()) {
             chdir(dirname($tmpFile));
 
             $filename = basename($tmpFile);
