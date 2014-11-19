@@ -2,20 +2,23 @@
 namespace SmartData\SmartData\Tests\Country;
 
 use PHPUnit_Framework_TestCase;
+use SmartData\SmartData\Country\CountryEntity;
+use SmartData\SmartData\Country\CountryLoader;
 use SmartData\SmartData\Country\CountryMapper;
 
 class CountryMapperTest extends PHPUnit_Framework_TestCase
 {
-    public function testCollectionMapper()
+    public function testMapArrayToCollection()
     {
-        $collection = (new CountryMapper())->loadCollection();
+        $collection = (new CountryMapper())->mapArrayToCollection((new CountryLoader())->loadAllCountries());
         $this->assertGreaterThan(1, count($collection));
     }
 
-    public function testEntityMapper()
+    public function testMapArrayToEntity()
     {
-        $entity = (new CountryMapper())->loadCollection()->get(0);
-        $this->assertInstanceOf('SmartData\\SmartData\\Country\\CountryEntity', $entity);
+        $countries = (new CountryLoader())->loadAllCountries();
+        $entity = (new CountryMapper())->mapArrayToEntity($countries[0]);
+        $this->assertInstanceOf(CountryEntity::class, $entity);
         $this->assertNotEmpty($entity->getCode());
     }
 }

@@ -6,6 +6,9 @@ use League\Geotools\Coordinate\Coordinate;
 use SmartData\SmartData\Coordinate\CoordinateCollectionInterface;
 use SmartData\SmartData\Coordinate\CoordinateLogic;
 use SmartData\SmartData\Country\CountryName\CountryNameCollection;
+use SmartData\SmartData\Region\RegionCollection;
+use League\Geotools\Polygon\Polygon;
+use League\Geotools\BoundingBox\BoundingBox;
 
 class CountryEntity extends CoordinateLogic implements JsonSerializable, CoordinateCollectionInterface
 {
@@ -13,6 +16,21 @@ class CountryEntity extends CoordinateLogic implements JsonSerializable, Coordin
      * @var Coordinate
      */
     protected $coordinate;
+
+    /**
+     * @var BoundingBox
+     */
+    protected $boundingBox;
+
+    /**
+     * @var RegionCollection
+     */
+    protected $regions;
+
+    /**
+     * @var Polygon
+     */
+    protected $polygon;
 
     /**
      * @var CountryNameCollection
@@ -91,6 +109,9 @@ class CountryEntity extends CoordinateLogic implements JsonSerializable, Coordin
 
     public function __construct()
     {
+        $this->boundingBox = new BoundingBox();
+        $this->regions = new RegionCollection();
+        $this->polygon = new Polygon();
         $this->coordinate = new Coordinate([
             $this->latitude,
             $this->longitude
@@ -145,6 +166,60 @@ class CountryEntity extends CoordinateLogic implements JsonSerializable, Coordin
     public function setCoordinate(Coordinate $coordinate)
     {
         $this->coordinate = $coordinate;
+        return $this;
+    }
+
+    /**
+     * @return BoundingBox
+     */
+    public function getBoundingBox()
+    {
+        return $this->boundingBox;
+    }
+
+    /**
+     * @param BoundingBox $boundingBox
+     * @return $this
+     */
+    public function setBoundingBox(BoundingBox $boundingBox)
+    {
+        $this->boundingBox = $boundingBox;
+        return $this;
+    }
+
+    /**
+     * @return RegionCollection
+     */
+    public function getRegions()
+    {
+        return $this->regions;
+    }
+
+    /**
+     * @param RegionCollection $regions
+     * @return $this
+     */
+    public function setRegions(RegionCollection $regions)
+    {
+        $this->regions = $regions;
+        return $this;
+    }
+
+    /**
+     * @return Polygon
+     */
+    public function getPolygon()
+    {
+        return $this->polygon;
+    }
+
+    /**
+     * @param Polygon $polygon
+     * @return $this
+     */
+    public function setPolygon(Polygon $polygon)
+    {
+        $this->polygon = $polygon;
         return $this;
     }
 
@@ -216,6 +291,7 @@ class CountryEntity extends CoordinateLogic implements JsonSerializable, Coordin
      */
     public function setLatitude($latitude)
     {
+        $this->getCoordinate()->setLatitude($latitude);
         $this->latitude = $latitude;
         return $this;
     }
@@ -234,6 +310,7 @@ class CountryEntity extends CoordinateLogic implements JsonSerializable, Coordin
      */
     public function setLongitude($longitude)
     {
+        $this->getCoordinate()->setLongitude($longitude);
         $this->longitude = $longitude;
         return $this;
     }
@@ -360,6 +437,7 @@ class CountryEntity extends CoordinateLogic implements JsonSerializable, Coordin
      */
     public function setNorth($north)
     {
+        $this->getBoundingBox()->setNorth($north);
         $this->north = $north;
         return $this;
     }
@@ -378,6 +456,7 @@ class CountryEntity extends CoordinateLogic implements JsonSerializable, Coordin
      */
     public function setEast($east)
     {
+        $this->getBoundingBox()->setEast($east);
         $this->east = $east;
         return $this;
     }
@@ -396,6 +475,7 @@ class CountryEntity extends CoordinateLogic implements JsonSerializable, Coordin
      */
     public function setSouth($south)
     {
+        $this->getBoundingBox()->setSouth($south);
         $this->south = $south;
         return $this;
     }
@@ -414,6 +494,7 @@ class CountryEntity extends CoordinateLogic implements JsonSerializable, Coordin
      */
     public function setWest($west)
     {
+        $this->getBoundingBox()->setWest($west);
         $this->west = $west;
         return $this;
     }

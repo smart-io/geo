@@ -30,7 +30,7 @@ class CountryLoader
     public function loadAllCountries()
     {
         return json_decode(
-            file_get_contents($this->storage->getStorage() . DIRECTORY_SEPARATOR . self::ALL_COUNTRIES_FILE),
+            file_get_contents($this->getStorage() . DIRECTORY_SEPARATOR . self::ALL_COUNTRIES_FILE),
             true
         );
     }
@@ -43,7 +43,7 @@ class CountryLoader
     {
         return json_decode(
             file_get_contents(
-                $this->storage->getStorage() . DIRECTORY_SEPARATOR . sprintf(self::COUNTRY_FILE, $country)
+                $this->getStorage() . DIRECTORY_SEPARATOR . sprintf(self::COUNTRY_FILE, $country)
             ),
             true
         );
@@ -57,9 +57,20 @@ class CountryLoader
     {
         return json_decode(
             file_get_contents(
-                $this->storage->getStorage() . DIRECTORY_SEPARATOR . sprintf(self::COUNTRY_POLYGON_FILE, $country)
+                $this->getStorage() . DIRECTORY_SEPARATOR . sprintf(self::COUNTRY_POLYGON_FILE, $country)
             ),
             true
         );
+    }
+
+    /**
+     * @return string
+     */
+    private function getStorage()
+    {
+        if (null === $this->storage) {
+            $this->storage = new Storage();
+        }
+        return $this->storage->getStorage();
     }
 }

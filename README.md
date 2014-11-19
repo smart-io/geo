@@ -60,12 +60,18 @@ Database of all countries in the world.
 
 __Properties__
 
- * Name
+ * Names
  * Short Code (Alpha-2 code)
  * Code (Alpha-3 code)
  * Latitude
  * Longitude
  * Bounding Box
+ * Currency
+ * Continent
+ * Population
+ * Area
+ * Capital
+ * Timezone
 
 __Examples__
 
