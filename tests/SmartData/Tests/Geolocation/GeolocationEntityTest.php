@@ -5,7 +5,6 @@ use PHPUnit_Framework_TestCase;
 use SmartData\SmartData\Country\CountryEntity;
 use SmartData\SmartData\Geolocation\GeolocationRepository;
 use SmartData\SmartData\Ip\IpEntity;
-use SmartData\SmartData\Ip\IpRepository;
 
 class GeolocationEntityTest extends PHPUnit_Framework_TestCase
 {
