@@ -1,5 +1,16 @@
 {
   "name": "smartdata/smartdata",
+  "type": "library",
+  "description": "SmartData is databases from Open Data providers compiled into easy to use PHP objects.",
+  "keywords": ["Country", "Region", "Data", "Database", "GeoIp", "Geolocation", "Province", "State"],
+  "homepage": "https://github.com/mysmartdata/php-smartdata",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gabriel Bull",
+      "email": "me@gabrielbull.com"
+    }
+  ],
   "repositories": [
     {
       "type": "vcs",
