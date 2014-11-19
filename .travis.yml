@@ -10,7 +10,7 @@ before_script:
   - composer install --prefer-source --no-interaction --dev
 
 script:
-  - php vendor/bin/smartdata data:update
+  - php bin/smartdata data:update
   - phpunit
 
 matrix:
