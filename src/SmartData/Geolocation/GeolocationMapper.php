@@ -20,6 +20,10 @@ class GeolocationMapper
             $geoLocation->setLongitude($result['location']['longitude']);
             $geoLocation->setCountry($result['country']['iso_code']);
 
+            if (isset($result['subdivisions'][0]['iso_code'])) {
+                $geoLocation->setRegion($result['subdivisions'][0]['iso_code']);
+            }
+
             return $geoLocation;
         }
         return null;

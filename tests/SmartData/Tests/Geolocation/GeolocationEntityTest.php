@@ -5,6 +5,7 @@ use PHPUnit_Framework_TestCase;
 use SmartData\SmartData\Country\CountryEntity;
 use SmartData\SmartData\Geolocation\GeolocationRepository;
 use SmartData\SmartData\Ip\IpEntity;
+use SmartData\SmartData\Region\RegionEntity;
 
 class GeolocationEntityTest extends PHPUnit_Framework_TestCase
 {
@@ -17,9 +18,14 @@ class GeolocationEntityTest extends PHPUnit_Framework_TestCase
         $geolocation = $repository->findByIp($ip);
 
         $country = $geolocation->getCountry();
+        $region = $geolocation->getRegion();
 
         $this->assertInstanceOf(CountryEntity::class, $country);
         $this->assertNotEmpty($country->getLongitude());
         $this->assertEquals('CA', $country->getShortCode());
+
+        $this->assertInstanceOf(RegionEntity::class, $region);
+        $this->assertNotEmpty($region->getLongitude());
+        $this->assertEquals('QC', $region->getCode());
     }
 }

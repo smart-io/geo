@@ -7,6 +7,7 @@ use League\Geotools\Coordinate\CoordinateInterface;
 use SmartData\SmartData\Coordinate\CoordinateLogic;
 use SmartData\SmartData\Country\CountryEntity;
 use SmartData\SmartData\SmartData;
+use SmartData\SmartData\Region\RegionEntity;
 
 class GeolocationEntity extends CoordinateLogic implements JsonSerializable, CoordinateInterface
 {
@@ -45,6 +46,16 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
     protected $unmappedCountry;
 
     /**
+     * @var RegionEntity
+     */
+    protected $region;
+
+    /**
+     * @var string
+     */
+    protected $unmappedRegion;
+
+    /**
      * @var string
      */
     protected $source;
@@ -73,6 +84,7 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
             'source' => $this->getSource(),
             'accuracy' => $this->getAccuracy(),
             'country' => $this->getCountry(),
+            'region' => $this->getRegion(),
         ];
     }
 
@@ -216,10 +228,57 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
     }
 
     /**
+     * @return RegionEntity
+     */
+    public function getRegion()
+    {
+        if (null !== $this->unmappedRegion && null === $this->region) {
+            $this->region = SmartData::getRegionRepository()->findByCode($this->unmappedRegion);
+        }
+        return $this->region;
+    }
+
+    /**
+     * @param RegionEntity|string $region
+     * @return $this
+     */
+    public function setRegion($region)
+    {
+        if (is_string($region)) {
+            $this->unmappedRegion = $region;
+        } else {
+            $this->region = $region;
+        }
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnmappedRegion()
+    {
+        return $this->unmappedRegion;
+    }
+
+    /**
+     * @param string $unmappedRegion
+     * @return $this
+     */
+    public function setUnmappedRegion($unmappedRegion)
+    {
+        $this->unmappedRegion = $unmappedRegion;
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function normalizeLatitude($latitude)
     {
+       if (null === $this->coordinate) {
+            $this->createCoordinate();
+        }
+
         return $this->coordinate->normalizeLatitude($latitude);
     }
 
@@ -228,6 +287,10 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
      */
     public function normalizeLongitude($longitude)
     {
+        if (null === $this->coordinate) {
+            $this->createCoordinate();
+        }
+        
         return $this->coordinate->normalizeLongitude($longitude);
     }
 
@@ -236,6 +299,10 @@ class GeolocationEntity extends CoordinateLogic implements JsonSerializable, Coo
      */
     public function getEllipsoid()
     {
+        if (null === $this->coordinate) {
+            $this->createCoordinate();
+        }
+
         return $this->coordinate->getEllipsoid();
     }
 }
