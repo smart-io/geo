@@ -5,6 +5,7 @@ use SmartData\SmartData\Airport\AirportRepository;
 use SmartData\SmartData\Country\CountryRepository;
 use SmartData\SmartData\Geolocation\GeolocationRepository;
 use SmartData\SmartData\Ip\IpRepository;
+use SmartData\SmartData\Region\RegionRepository;
 
 class SmartData
 {
@@ -12,11 +13,6 @@ class SmartData
      * @var Storage
      */
     private static $storage;
-
-    /**
-     * @var AirportRepository
-     */
-    private static $airportRepository;
 
     /**
      * @var GeolocationRepository
@@ -34,15 +30,9 @@ class SmartData
     private static $countryRepository;
 
     /**
-     * @return AirportRepository
+     * @var RegionRepository
      */
-    public static function getAirportRepository()
-    {
-        if (null === self::$airportRepository) {
-            self::$airportRepository = new AirportRepository();
-        }
-        return self::$airportRepository;
-    }
+    private static $regionRepository;
 
     /**
      * @return GeolocationRepository
@@ -75,6 +65,17 @@ class SmartData
             self::$countryRepository = new CountryRepository(self::getStorage());
         }
         return self::$countryRepository;
+    }
+
+    /**
+     * @return RegionRepository
+     */
+    public static function getRegionRepository()
+    {
+        if (null === self::$regionRepository) {
+            self::$regionRepository = new RegionRepository(self::getStorage());
+        }
+        return self::$regionRepository;
     }
 
     /**
