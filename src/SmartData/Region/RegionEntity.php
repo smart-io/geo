@@ -8,6 +8,8 @@ use SmartData\SmartData\Coordinate\CoordinateLogic;
 use SmartData\SmartData\Region\RegionName\RegionNameCollection;
 use SmartData\SmartData\Country\CountryEntity;
 use SmartData\SmartData\Region\Type\TypeInterface;
+use League\Geotools\Polygon\Polygon;
+use League\Geotools\BoundingBox\BoundingBox;
 
 class RegionEntity extends CoordinateLogic implements JsonSerializable, CoordinateCollectionInterface
 {
@@ -15,6 +17,11 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
      * @var Coordinate
      */
     protected $coordinate;
+
+    /**
+     * @var BoundingBox
+     */
+    protected $boundingBox;
 
     /**
      * @var RegionNameCollection
@@ -25,6 +32,11 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
      * @var CountryEntity
      */
     protected $country;
+
+    /**
+     * @var Polygon
+     */
+    protected $polygon;
 
     /**
      * @var string
@@ -54,25 +66,27 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
     /**
      * @var string
      */
-    protected $boundariesNortheastLatitude;
+    protected $north;
 
     /**
      * @var string
      */
-    protected $boundariesNortheastLongitude;
+    protected $east;
 
     /**
      * @var string
      */
-    protected $boundariesSouthwestLatitude;
+    protected $south;
 
     /**
      * @var string
      */
-    protected $boundariesSouthwestLongitude;
+    protected $west;
 
     public function __construct()
     {
+        $this->boundingBox = new BoundingBox();
+        $this->polygon = new Polygon();
         $this->coordinate = new Coordinate([
             $this->latitude,
             $this->longitude
@@ -90,82 +104,46 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
             'code' => $this->getCode(),
             'latitude' => $this->getLatitude(),
             'longitude' => $this->getLongitude(),
-            'boundariesNortheastLatitude' => $this->getBoundariesNortheastLatitude(),
-            'boundariesNortheastLongitude' => $this->getBoundariesNortheastLongitude(),
-            'boundariesSouthwestLatitude' => $this->getBoundariesSouthwestLatitude(),
-            'boundariesSouthwestLongitude' => $this->getBoundariesSouthwestLongitude()
+            'north' => $this->getNorth(),
+            'east' => $this->getEast(),
+            'south' => $this->getSouth(),
+            'west' => $this->getWest()
         ];
     }
 
     /**
-     * @return string
+     * @return Polygon
      */
-    public function getBoundariesNortheastLatitude()
+    public function getPolygon()
     {
-        return $this->boundariesNortheastLatitude;
+        return $this->polygon;
     }
 
     /**
-     * @param string $boundariesNortheastLatitude
+     * @param Polygon $polygon
      * @return $this
      */
-    public function setBoundariesNortheastLatitude($boundariesNortheastLatitude)
+    public function setPolygon(Polygon $polygon)
     {
-        $this->boundariesNortheastLatitude = $boundariesNortheastLatitude;
+        $this->polygon = $polygon;
         return $this;
     }
 
     /**
-     * @return string
+     * @return BoundingBox
      */
-    public function getBoundariesNortheastLongitude()
+    public function getBoundingBox()
     {
-        return $this->boundariesNortheastLongitude;
+        return $this->boundingBox;
     }
 
     /**
-     * @param string $boundariesNortheastLongitude
+     * @param BoundingBox $boundingBox
      * @return $this
      */
-    public function setBoundariesNortheastLongitude($boundariesNortheastLongitude)
+    public function setBoundingBox(BoundingBox $boundingBox)
     {
-        $this->boundariesNortheastLongitude = $boundariesNortheastLongitude;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBoundariesSouthwestLatitude()
-    {
-        return $this->boundariesSouthwestLatitude;
-    }
-
-    /**
-     * @param string $boundariesSouthwestLatitude
-     * @return $this
-     */
-    public function setBoundariesSouthwestLatitude($boundariesSouthwestLatitude)
-    {
-        $this->boundariesSouthwestLatitude = $boundariesSouthwestLatitude;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBoundariesSouthwestLongitude()
-    {
-        return $this->boundariesSouthwestLongitude;
-    }
-
-    /**
-     * @param string $boundariesSouthwestLongitude
-     * @return $this
-     */
-    public function setBoundariesSouthwestLongitude($boundariesSouthwestLongitude)
-    {
-        $this->boundariesSouthwestLongitude = $boundariesSouthwestLongitude;
+        $this->boundingBox = $boundingBox;
         return $this;
     }
 
@@ -258,6 +236,82 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
     public function setNames(RegionNameCollection $names)
     {
         $this->names = $names;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNorth()
+    {
+        return $this->north;
+    }
+
+    /**
+     * @param string $north
+     * @return $this
+     */
+    public function setNorth($north)
+    {
+        $this->getBoundingBox()->setNorth($north);
+        $this->north = $north;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEast()
+    {
+        return $this->east;
+    }
+
+    /**
+     * @param string $east
+     * @return $this
+     */
+    public function setEast($east)
+    {
+        $this->getBoundingBox()->setEast($east);
+        $this->east = $east;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSouth()
+    {
+        return $this->south;
+    }
+
+    /**
+     * @param string $south
+     * @return $this
+     */
+    public function setSouth($south)
+    {
+        $this->getBoundingBox()->setSouth($south);
+        $this->south = $south;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWest()
+    {
+        return $this->west;
+    }
+
+    /**
+     * @param string $west
+     * @return $this
+     */
+    public function setWest($west)
+    {
+        $this->getBoundingBox()->setWest($west);
+        $this->west = $west;
         return $this;
     }
 
