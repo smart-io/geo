@@ -55,7 +55,7 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
     protected $longCode;
 
     /**
-     * @var TypeInterface
+     * @var TypeInterface|string
      */
     protected $type;
 
@@ -291,7 +291,7 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
     }
 
     /**
-     * @return TypeInterface
+     * @return TypeInterface|string
      */
     public function getType()
     {
@@ -299,10 +299,10 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
     }
 
     /**
-     * @param TypeInterface $type
+     * @param TypeInterface|string $type
      * @return $this
      */
-    public function setType(TypeInterface $type)
+    public function setType($type)
     {
         $this->type = $type;
         return $this;
