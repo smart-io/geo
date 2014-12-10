@@ -10,6 +10,7 @@ use SmartData\SmartData\Country\CountryEntity;
 use SmartData\SmartData\Region\Type\TypeInterface;
 use League\Geotools\Polygon\Polygon;
 use League\Geotools\BoundingBox\BoundingBox;
+use SmartData\SmartData\SmartData;
 
 class RegionEntity extends CoordinateLogic implements JsonSerializable, CoordinateCollectionInterface
 {
@@ -49,9 +50,19 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
     protected $code;
 
     /**
+     * @var string
+     */
+    protected $longCode;
+
+    /**
      * @var TypeInterface
      */
     protected $type;
+
+    /**
+     * @var string
+     */
+    protected $timezone;
 
     /**
      * @var string
@@ -102,6 +113,10 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
         return [
             'names' => $this->getNames(),
             'code' => $this->getCode(),
+            'long_code' => $this->getLongCode(),
+            'type' => $this->getType(),
+            'country' => $this->getCountry(),
+            'timezone' => $this->getTimezone(),
             'latitude' => $this->getLatitude(),
             'longitude' => $this->getLongitude(),
             'north' => $this->getNorth(),
@@ -162,6 +177,24 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
     public function setCode($code)
     {
         $this->code = $code;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLongCode()
+    {
+        return $this->longCode;
+    }
+
+    /**
+     * @param string $longCode
+     * @return $this
+     */
+    public function setLongCode($longCode)
+    {
+        $this->longCode = $longCode;
         return $this;
     }
 
@@ -242,6 +275,42 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
     /**
      * @return string
      */
+    public function getTimezone()
+    {
+        return $this->timezone;
+    }
+
+    /**
+     * @param string $timezone
+     * @return $this
+     */
+    public function setTimezone($timezone)
+    {
+        $this->timezone = $timezone;
+        return $this;
+    }
+
+    /**
+     * @return TypeInterface
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param TypeInterface $type
+     * @return $this
+     */
+    public function setType(TypeInterface $type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getNorth()
     {
         return $this->north;
@@ -312,6 +381,49 @@ class RegionEntity extends CoordinateLogic implements JsonSerializable, Coordina
     {
         $this->getBoundingBox()->setWest($west);
         $this->west = $west;
+        return $this;
+    }
+
+    /**
+     * @return CountryEntity
+     */
+    public function getCountry()
+    {
+        if (null !== $this->unmappedCountry && null === $this->country) {
+            $this->country = SmartData::getCountryRepository()->findByShortCode($this->unmappedCountry);
+        }
+        return $this->country;
+    }
+
+    /**
+     * @param CountryEntity|string $country
+     * @return $this
+     */
+    public function setCountry($country)
+    {
+        if (is_string($country)) {
+            $this->unmappedCountry = $country;
+        } else {
+            $this->country = $country;
+        }
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnmappedCountry()
+    {
+        return $this->unmappedCountry;
+    }
+
+    /**
+     * @param string $unmappedCountry
+     * @return $this
+     */
+    public function setUnmappedCountry($unmappedCountry)
+    {
+        $this->unmappedCountry = $unmappedCountry;
         return $this;
     }
 
