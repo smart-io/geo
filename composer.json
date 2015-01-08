@@ -11,18 +11,12 @@
       "email": "me@gabrielbull.com"
     }
   ],
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:gabrielbull/geotools.git"
-    }
-  ],
   "require": {
     "php": ">=5.6.0",
     "symfony/console": "2.*",
     "psr/log": "~1",
     "maxmind-db/reader": "0.3.*",
-    "league/geotools": "dev-feature/polygon"
+    "league/geotools": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "~4"
