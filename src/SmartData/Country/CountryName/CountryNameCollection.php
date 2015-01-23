@@ -24,7 +24,10 @@ class CountryNameCollection extends ArrayCollection
                 foreach ($this->elements as $element) {
                     if (is_string($element->getLanguage()) && $key === $element->getLanguage()) {
                         return $element;
-                    } elseif ($key === $element->getLanguage()->getCode()) {
+                    } elseif (
+                        $element->getLanguage() instanceof LanguageEntity &&
+                        $key === $element->getLanguage()->getCode()
+                    ) {
                         return $element;
                     }
                 }
