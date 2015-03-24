@@ -1,11 +1,11 @@
-# SmartData
+# Smart Geo
 
-[![Build Status](https://img.shields.io/travis/mysmartdata/php-smartdata/master.svg?style=flat)](https://travis-ci.org/mysmartdata/php-smartdata)
-[![Latest Stable Version](http://img.shields.io/packagist/v/smartdata/smartdata.svg?style=flat)](https://packagist.org/packages/smartdata/smartdata)
-[![Total Downloads](https://img.shields.io/packagist/dt/smartdata/smartdata.svg?style=flat)](https://packagist.org/packages/smartdata/smartdata)
-[![License](https://img.shields.io/packagist/l/smartdata/smartdata.svg?style=flat)](https://packagist.org/packages/smartdata/smartdata)
+[![Build Status](https://img.shields.io/travis/smart-io/geo/master.svg?style=flat)](https://travis-ci.org/smart-io/geo)
+[![Latest Stable Version](http://img.shields.io/packagist/v/smart/geo.svg?style=flat)](https://packagist.org/packages/smart/geo)
+[![Total Downloads](https://img.shields.io/packagist/dt/smart/geo.svg?style=flat)](https://packagist.org/packages/smart/geo)
+[![License](https://img.shields.io/packagist/l/smart/geo.svg?style=flat)](https://packagist.org/packages/smart/geo)
 
-SmartData is databases from Open Data providers compiled into easy to use PHP objects.
+Smart Geo is databases from Open Data providers compiled into easy to use PHP objects.
 
 1. [Features](#features)
 2. [Sources](#sources)
@@ -31,19 +31,19 @@ SmartData is databases from Open Data providers compiled into easy to use PHP ob
 
 ## Requirements
 
-SmartData does not require a database, but instead, uses JSON files.
+Smart Geo does not require a database, but instead, uses JSON files.
  
 This library uses PHP 5.6+.
 
 ## Installation
 
-You need to install the SmartData library through composer. To do so, add the following lines to your 
+You need to install the Smart Geo library through composer. To do so, add the following lines to your 
 composer.json file.
 
 ```javascript
 {
     "require": {
-       "smartdata/smartdata": "dev-master"
+       "smart/geo": "dev-master"
     }
 }
 ```
@@ -51,7 +51,7 @@ composer.json file.
 To download or update the current data, use the following command.
 
 ```shell
-php vendor/bin/smartdata data:update
+php vendor/bin/geo data:update
 ```
 
 ## Country
@@ -78,7 +78,7 @@ __Examples__
 Get a list of all countries.
 
 ```php
-$countryCollection = (new SmartData)->getCountryRepository()->findAll();
+$countryCollection = (new Geo)->getCountryRepository()->findAll();
 ```
 
 Get country name in english.
@@ -114,9 +114,9 @@ __Examples__
 Get a list of all regions in the US.
 
 ```php
-$smartData = new SmartData;
-$country = $smartData->getCountryRepository()->findByCode('US');
-$regionCollection = (new SmartData)->getRegionRepository()->findByCountry($country);
+$geo = new Geo;
+$country = $geo->getCountryRepository()->findByCode('US');
+$regionCollection = (new Geo)->getRegionRepository()->findByCountry($country);
 ```
 
 Get region name amd type in english.
@@ -138,15 +138,15 @@ __Examples__
 Get the IP from `$_SERVER['REMOTE_ADDR']`.
 
 ```php
-$smartData = new SmartData;
-$ip = $smartData->getIpRepository()->findIp();
+$geo = new Geo;
+$ip = $geo->getIpRepository()->findIp();
 ```
  
 Get the network IP from icanhazip.com.
 
 ```php
-$smartData = new SmartData;
-$ip = $smartData->getIpRepository()->findRealIp();
+$geo = new Geo;
+$ip = $geo->getIpRepository()->findRealIp();
 ```
 
 ## Geolocation
@@ -164,9 +164,9 @@ __Examples__
 Get a Geolocation from the IP.
 
 ```php
-$smartData = new SmartData;
-$ip = $smartData->getIpRepository()->findIp();
-$geolocation = $smartData->getGeolocationRepository()->findByIp($ip);
+$geo = new Geo;
+$ip = $geo->getIpRepository()->findIp();
+$geolocation = $geo->getGeolocationRepository()->findByIp($ip);
 ```
 
 Get country from Geolocation.

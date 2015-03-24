@@ -1,9 +1,9 @@
 {
-  "name": "smartdata/smartdata",
+  "name": "smart/geo",
   "type": "library",
-  "description": "SmartData is databases from Open Data providers compiled into easy to use PHP objects.",
+  "description": "Smart Geo is databases from Open Data providers compiled into easy to use PHP objects.",
   "keywords": ["Country", "Region", "Data", "Database", "GeoIp", "Geolocation", "Province", "State"],
-  "homepage": "https://github.com/mysmartdata/php-smartdata",
+  "homepage": "https://github.com/smart-io/geo",
   "license": "MIT",
   "authors": [
     {
@@ -23,19 +23,19 @@
   },
   "autoload": {
     "psr-4": {
-      "SmartData\\SmartData\\": "src/SmartData"
+      "Smart\\Geo\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "SmartData\\SmartData\\Tests\\": [
-        "tests/SmartData/Tests",
-        "tests/SmartData/Tests/_includes"
+      "Smart\\Geo\\Tests\\": [
+        "tests/Geo/Tests",
+        "tests/Geo/Tests/_includes"
       ]
     }
   },
   "bin": [
-    "bin/smartdata",
-    "bin/smartdata.php"
+    "bin/geo",
+    "bin/geo.php"
   ]
 }
