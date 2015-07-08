@@ -40,6 +40,6 @@ class IpRepository
         if (!empty($ip) && preg_match('/^[\d\.]*$/', $ip)) {
             return (new IpMapper())->mapArrayEntity(['ip' => $ip]);
         }
-        return null;
+        return $this->findIp();
     }
 }
