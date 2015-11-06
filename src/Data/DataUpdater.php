@@ -9,12 +9,6 @@ class DataUpdater
 {
     public static function update()
     {
-        $metaData = (new MetaMapper())->loadCollection();
-        $dataDownloader = new DataDownloader();
-        $storage = new Storage();
-
-        foreach ($metaData as $meta) {
-            $dataDownloader->download($meta, $storage);
-        }
+        (new DataDownloader)->downloadArchive(new Storage);
     }
 }
