@@ -57,8 +57,9 @@ class CountryRepository
     public function findByShortCode($shortCode)
     {
         if (!isset($this->items[$shortCode])) {
-            return $this->items[$shortCode] =
-                $this->getMapper()->mapArrayToEntity($this->getLoader()->loadCountry($shortCode));
+            $country = $this->getLoader()->loadCountry($shortCode);
+            if (!$country) return null;
+            return $this->items[$shortCode] = $this->getMapper()->mapArrayToEntity($country);
         }
         return $this->items[$shortCode];
     }
