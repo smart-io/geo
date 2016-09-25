@@ -13,8 +13,6 @@ Smart Geo is databases from Open Data providers compiled into easy to use PHP ob
 4. [Installation](#installation)
 5. [Country](#country)
 6. [Region](#region)
-7. [IP](#ip)
-8. [Geolocation](#geolocation)
 
 ## Features
 
@@ -119,7 +117,7 @@ $country = $geo->getCountryRepository()->findByCode('US');
 $regionCollection = (new Geo)->getRegionRepository()->findByCountry($country);
 ```
 
-Get region name amd type in english.
+Get region name and type in english.
 
 ```php
 foreach ($regionCollection as $region) {
@@ -127,50 +125,4 @@ foreach ($regionCollection as $region) {
        $region->getType()::class . " of the " . 
        $country->getNames()->get('en);
 }
-```
- 
-## IP
-
-IP address object. Can get the real IP of the server from icanhazip.com, practical for development.
- 
-__Examples__
-
-Get the IP from `$_SERVER['REMOTE_ADDR']`.
-
-```php
-$geo = new Geo;
-$ip = $geo->getIpRepository()->findIp();
-```
- 
-Get the network IP from icanhazip.com.
-
-```php
-$geo = new Geo;
-$ip = $geo->getIpRepository()->findRealIp();
-```
-
-## Geolocation
-
-Get a Geolocation by IP (Uses MaxMind).
-
-__Properties__
-
- * Latitude
- * Longitude
- * Country
-
-__Examples__
-
-Get a Geolocation from the IP.
-
-```php
-$geo = new Geo;
-$ip = $geo->getIpRepository()->findIp();
-$geolocation = $geo->getGeolocationRepository()->findByIp($ip);
-```
-
-Get country from Geolocation.
-
-```php
-echo "You are in this country: " . $geolocation->getCountry()->getNames()->get('en');
 ```

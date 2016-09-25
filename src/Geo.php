@@ -2,10 +2,7 @@
 
 namespace Smart\Geo;
 
-use Smart\Geo\Airport\AirportRepository;
 use Smart\Geo\Country\CountryRepository;
-use Smart\Geo\Geolocation\GeolocationRepository;
-use Smart\Geo\Ip\IpRepository;
 use Smart\Geo\Region\RegionRepository;
 
 class Geo
@@ -16,16 +13,6 @@ class Geo
     private static $storage;
 
     /**
-     * @var GeolocationRepository
-     */
-    private static $geolocationRepository;
-
-    /**
-     * @var IpRepository
-     */
-    private static $ipRepository;
-
-    /**
      * @var CountryRepository
      */
     private static $countryRepository;
@@ -34,28 +21,6 @@ class Geo
      * @var RegionRepository
      */
     private static $regionRepository;
-
-    /**
-     * @return GeolocationRepository
-     */
-    public function getGeolocationRepository()
-    {
-        if (null === self::$geolocationRepository) {
-            self::$geolocationRepository = new GeolocationRepository();
-        }
-        return self::$geolocationRepository;
-    }
-
-    /**
-     * @return IpRepository
-     */
-    public static function getIpRepository()
-    {
-        if (null === self::$ipRepository) {
-            self::$ipRepository = new IpRepository();
-        }
-        return self::$ipRepository;
-    }
 
     /**
      * @return CountryRepository
