@@ -1,3 +1,5 @@
+# This library is deprecated, use [geobase/countries](https://github.com/geobase/php-countries) instead.
+
 # Smart Geo
 
 [![Build Status](https://img.shields.io/travis/smart-io/geo/master.svg?style=flat)](https://travis-ci.org/smart-io/geo)
